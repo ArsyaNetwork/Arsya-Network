@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arsya Network — Survival Mix & Vanilla</title>
+  <meta name="description" content="Website resmi Arsya Network — Survival Mix (live) & Survival Vanilla (coming soon)">
+  <style>
+    :root{--bg:#0b0f14;--card:#0f1720;--muted:#9aa4af;--accent:#00c853;--accent2:#5865F2}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;line-height:1.4;background:linear-gradient(180deg,#061016 0%, #07121a 60%);color:#e6eef6}
+    a{color:var(--accent);text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+
+    header.hero{min-height:56vh;display:flex;align-items:center;border-radius:12px;padding:40px;background-image:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('assets/background.jpg');background-size:cover;background-position:center;margin-bottom:24px}
+    header .left{flex:1}
+    .logo{width:120px;height:120px;object-fit:contain;border-radius:12px;background:#0b1116;padding:10px}
+    h1{font-size:34px;margin:10px 0}
+    p.lead{color:var(--muted);margin:6px 0 18px}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:#021115;font-weight:600;margin-right:10px}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef6}
+    .btn.discord{background:var(--accent2);color:#fff}
+
+    .servers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px}
+    .server-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+    .server-card h3{margin:0 0 6px}
+    .server-meta{color:var(--muted);font-size:14px;margin-bottom:12px}
+    .status{font-weight:700;display:flex;align-items:center;gap:8px}
+    .status.online{color:#7ee787}
+    .status.offline{color:#ff7b7b}
+    .ip{font-family:monospace;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:8px;display:inline-block}
+
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:28px 0}
+    .feature{background:rgba(255,255,255,0.02);padding:14px;border-radius:10px;text-align:center}
+
+    footer{padding:24px 0;color:var(--muted);text-align:center;margin-top:34px}
+
+    @media (max-width:720px){h1{font-size:26px}.logo{width:96px;height:96px}}
+
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:13px}
+
+    .leaderboard{margin-top:20px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:14px;border-radius:10px}
+    .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .row:last-child{border-bottom:0}
+
+    /* Tombol WA Mengambang Modern */
+    .wa-floating {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .wa-floating:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    }
+    .wa-floating:active {
+      transform: scale(0.95);
+    }
+    .wa-floating svg {
+      width: 22px;
+      height: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="left">
+        <a href="https://discord.gg/Jvwhpz7p" target="_blank">
+          <img src="https://i.ibb.co.com/8nRYZDXn/Untitled-1ukuku.png" alt="Arsya Network" class="logo">
+        </a>
+        <h1>Arsya Network <span style="color:var(--accent)">— Since 2023</span></h1>
+        <p class="lead">Kami Memiliki 2 server Yang Berbeda Untuk Dimainkan Survival Mix & Survival Vanilla</p>
+        <div>
+          <a href="#servers" class="btn">Lihat Server</a>
+          <a href="https://discord.gg/Jvwhpz7p" target="_blank" class="btn discord">Join Discord</a>
+          <a href="#features" class="btn secondary">Fitur</a>
+        </div>
+      </div>
+      <div style="min-width:260px;text-align:right">
+        <div style="background:rgba(0,0,0,0.18);padding:14px;border-radius:12px">
+          <div class="muted">IP Survival Mix</div>
+          <div class="ip" id="main-ip">mc.arsyanetwork.my.id:19132</div>
+          <div style="margin-top:10px" id="main-status">Memuat status…</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Servers -->
+    <section id="servers">
+      <h2>Daftar Server</h2>
+      <p class="muted">Kami menjalankan dua server: Survival Mix (aktif) dan Survival Vanilla (coming soon).</p>
+      <div class="servers">
+        <div class="server-card" data-server="mc.arsyanetwork.my.id:19132" id="server-mix">
+          <h3>Survival Mix</h3>
+          <div class="server-meta">Mode: Survival (Economy, Jobs, Minigames)</div>
+          <div class="status" id="status-mix">Memuat...</div>
+          <div style="margin-top:12px"><span class="pill">IP</span> <span class="ip" id="ip-mix">mc.arsyanetwork.my.id:19132</span></div>
+          <div class="leaderboard" id="leaderboard-mix">
+            <strong>Leaderboard (Top 5)</strong>
+            <div class="row"><div>1. —</div><div>— pts</div></div>
+            <div class="row"><div>2. —</div><div>— pts</div></div>
+            <div class="row"><div>3. —</div><div>— pts</div></div>
+          </div>
+        </div>
+        <div class="server-card" id="server-vanilla">
+          <h3>Survival Vanilla <span style="font-size:13px;color:var(--muted)">(Coming Soon)</span></h3>
+          <div class="server-meta">Mode: Vanilla — bersih dari custom plugin. Rilis segera.</div>
+          <div class="status offline">🎮 Coming Soon</div>
+          <div style="margin-top:12px"><span class="pill">Rilis</span> <span class="muted">Q4 2025 (perkiraan)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <h2>Fitur Unggulan</h2>
+      <div class="features">
+        <div class="feature"><h4>Ekonomi & Shop</h4><p class="muted">Sistem ekonomi aktif dengan shop, auction, dan ranking.</p></div>
+        <div class="feature"><h4>CFSP & Bot</h4><p class="muted">Simulated players membantu test dan event.</p></div>
+        <div class="feature"><h4>Mini Games</h4><p class="muted">Event mingguan seperti PvP, Parkour, dan Treasure Hunt.</p></div>
+      </div>
+    </section>
+
+    <!-- Premium Rank -->
+    <section id="premium">
+      <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paket Rank Premium</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1E2A38;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1 {
+    color: #3498DB;
+    margin-bottom: 30px;
+  }
+
+  .rank-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .rank-card {
+    background-color: #2C3E50;
+    border: 2px solid #3498DB;
+    border-radius: 15px;
+    width: 200px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .rank-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .rank-card h2 {
+    margin: 10px 0;
+    color: #FFFFFF;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+    color: #BDC3C7;
+  }
+
+  ul li::before {
+    content: "●";
+    color: #3498DB;
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+  }
+
+  .order-btn {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: #3498DB;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .order-btn:hover {
+    background-color: #2980B9;
+  }
+</style>
+</head>
+<body>
+
+<h1>Paket Rank Premium</h1>
+<div class="rank-container">
+
+  <div class="rank-card">
+    <img src="stone.png" alt="Rank Stone">
+    <h2>Stone</h2>
+    <ul>
+      <li>Effect Fly</li>
+      <li>Night Vision</li>
+    </ul>
+    <a href="https://wa.me/6281263130957" class="order-btn">Pesan</a>
+  </div>
+
+  <div class="rank-card">
+    <img src="iron.png" alt="Rank Iron">
+    <h2>Iron</h2>
+    <ul>
+      <li>Effect Fly</li>
+      <li>Night Vision</li>
+    </ul>
+    <a href="https://wa.me/6281263130957" class="order-btn">Pesan</a>
+  </div>
+
+  <div class="rank-card">
+    <img src="gold.png" alt="Rank Gold">
+    <h2>Gold</h2>
+    <ul>
+      <li>Effect Fly</li>
+      <li>Night Vision</li>
+    </ul>
+    <a href="https://wa.me/6281263130957" class="order-btn">Pesan</a>
+  </div>
+
+</div>
+
+</body>
+</html>
+
+    </section>
+
+    <footer>
+      <div>© 2025 Arsya Network • IP: <span id="footer-ip">mc.arsyanetwork.my.id:19132</span></div>
+    </footer>
+  </div>
+
+  <!-- Tombol WhatsApp Mengambang -->
+  <a href="https://wa.me/6281263130957?text=Halo%20Admin,%20saya%20mau%20pesan%20rank" 
+     class="wa-floating" target="_blank">
+    <!-- Ikon WhatsApp SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="white">
+      <path d="M380.9 97.1C339-3.7 248.1-33.6 157.6 7.3 90.4 38.6 47 106.7 47 181.6c0 35.4 9.5 70 27.5 100.2L0 512l236.7-62.2c30.4 8.3 62 12.5 93.4 12.5 74.9 0 143-43.4 174.3-110.6 40.9-90.5 11-181.4-61.5-254.6zM330.6 366.4c-21.3 0-42.6-5.6-61.4-16.4l-19.4-11.3c-4.4-2.6-10-1.6-13.4 2.3l-19.2 21.4c-33.7-17.8-61-45-78.8-78.8l21.4-19.2c3.9-3.5 4.9-9 2.3-13.4l-11.3-19.4c-18.8-32.3-21.5-70.9-7.5-105.2 5.7-13.7 15.8-24.9 28.9-31.9 34.3-18.5 75.4-17.3 108.1 3.3 18.7 11.9 34.6 27.8 46.5 46.5 20.6 32.7 21.9 73.8 3.3 108.1-7 13.1-18.2 23.2-31.9 28.9-13.2 5.5-26.9 8.3-40.6 8.3z"/>
+    </svg>
+    Chat Admin
+  </a>
+</body>
+</html>

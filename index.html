@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Arsya Network</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --clr-neon:#0099ff;
+    --clr-bg:#0e0e0e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif;color:#fff}
+
+  /* -------- BACKGROUND FADE EFFECT -------- */
+  body{
+    background:linear-gradient(to bottom, rgba(14,14,14,0) 0%, var(--clr-bg) 100%),
+               url('https://i.pinimg.com/originals/62/b9/c0/62b9c02db463b4b6d07b44919267922a.gif') center top / cover fixed;
+  }
+
+  /* ======= GLASS HEADER ======= */
+  .hero{
+    padding:60px 20px 40px;
+    position:relative;
+    text-align:center;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(8px);
+  }
+  .hero>*{position:relative;z-index:2}
+
+  .hero h1{
+    font-size:2.5rem;
+    font-weight:600;
+    letter-spacing:1px;
+    color:#fff;
+    text-shadow:none;
+  }
+
+  .hero .stats{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin:20px 0;
+    font-size:1.1rem;
+  }
+  .hero .stats span{color:var(--clr-neon);font-weight:bold}
+  .hero .cta{
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .hero .btn{
+    padding:12px 28px;
+    border:2px solid var(--clr-neon);
+    background:transparent;
+    color:var(--clr-neon);
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+  }
+  .hero .btn:hover{
+    background:var(--clr-neon);
+    color:#000;
+    box-shadow:0 0 15px var(--clr-neon);
+  }
+
+  /* ======= MODE SERVER & PREMIUM RANK ======= */
+  .mode-section{
+    text-align:center;
+    padding:40px 20px 0;
+  }
+  .mode-section h2{
+    font-family:'Poppins',sans-serif;
+    font-size:2rem;
+    margin-bottom:30px;
+    font-weight:600;
+  }
+  .mode-grid{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+  }
+  .mode-card{
+    background:#1a1a1a;
+    border-radius:15px;
+    padding:25px;
+    max-width:300px;
+    border:2px solid;
+    font-family:'Poppins',sans-serif;
+  }
+  .mode-card.mix{border-color:#ff6b35;}
+  .mode-card.vanilla{border-color:#32cd32;}
+  .mode-card h3{
+    font-family:'Poppins',sans-serif;
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .mode-card.mix h3{color:#ff6b35;}
+  .mode-card.vanilla h3{color:#32cd32;}
+  .mode-card p{
+    font-size:0.9rem;
+    color:#ccc;
+    line-height:1.5;
+    font-family:'Poppins',sans-serif;
+  }
+  .premium-title{
+    font-family:'Poppins',sans-serif;
+    font-size:2.5rem;
+    font-weight:bold;
+    margin:30px 0 20px;
+    color:#fff;
+  }
+
+  /* ======= CARD GRID ======= */
+  .container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    padding:40px 20px;
+  }
+  .card{
+    position:relative;
+    overflow:hidden;
+    background:#1a1a1a;
+    border-radius:15px;
+    padding:18px;
+    text-align:center;
+    transform:perspective(800px) rotateX(0) rotateY(0) translateZ(0);
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:perspective(800px) rotateX(-4deg) rotateY(4deg) translateZ(20px);
+    box-shadow:0 15px 30px rgba(0,153,255,.35);
+  }
+  .card img{
+    width:100%;
+    height:160px;
+    object-fit:scale-down;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+  .card h2{
+    margin:10px 0;
+    font-size:1.4em;
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+  }
+  .price{
+    color:var(--clr-neon);
+    font-weight:bold;
+    font-size:1.1em;
+    margin-bottom:8px;
+    font-family:'Poppins',sans-serif;
+  }
+  .buffs{
+    list-style:none;
+    padding:0;
+    margin:8px 0;
+    font-size:.85em;
+    color:#ccc;
+    font-family:'Poppins',sans-serif;
+  }
+  .buffs li{margin:3px 0}
+  .order-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 24px;
+    background:var(--clr-neon);
+    color:#000;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    font-family:'Poppins',sans-serif;
+  }
+  .order-btn:hover{background:#007acc}
+  .shine{
+    position:absolute;
+    top:0;
+    left:-75%;
+    width:50%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+    transform:skewX(-25deg);
+    pointer-events:none;
+  }
+  .card:hover .shine{animation:shine .8s ease forwards}
+  @keyframes shine{100%{left:125%}}
+
+  /* ======= GALLERY ======= */
+  .gallery{
+    text-align:center;
+    padding:40px 20px;
+  }
+  .gallery h2{
+    font-size:2rem;
+    margin-bottom:40px;
+  }
+  .gallery .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+  }
+  .gallery img{
+    width:100%;
+    height:auto;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,153,255,.35);
+    transition:.3s;
+  }
+  .gallery img:hover{
+    transform:scale(1.05);
+  }
+
+  /* ======= ABOUT US ======= */
+  .about-us{
+    padding:40px 20px;
+    text-align:center;
+  }
+  .about-us h2{
+    font-size:2rem;
+    margin-bottom:20px;
+  }
+
+  /* ======= SOCIAL MEDIA ======= */
+  .social-media{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:20px;
+    background:var(--clr-bg);
+  }
+  .social-media a{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    color:#fff;
+    text-decoration:none;
+    transition:.3s;
+  }
+  .social-media a:hover{
+    transform:scale(1.05);
+  }
+  .social-media img{
+    width:40px;
+    height:40px;
+    margin-bottom:5px;
+  }
+
+  /* ======= FOOTER ======= */
+  .footer{
+    background:var(--clr-bg);
+    color:#ccc;
+    text-align:center;
+    padding:20px;
+    font-size:0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <h1>Arsya Network</h1>
+  <div class="stats">
+    <div>Member <span id="count">123</span></div>
+    <div>Versi Server <span>1.21.50 - 1.21.94</span></div>
+    <div>Pemain Aktif <span>9+</span></div>
+  </div>
+  <div class="cta">
+    <a class="btn" href="minecraft://addExternalServer?serverName=ArsyaNetwork&serverAddress=mc.arsyanetwork.my.id&serverPort=19132">
+      🎮 Main Sekarang
+    </a>
+    <a class="btn" href="https://discord.gg/Jvwhpz7p">
+      💬 Gabung Discord
+    </a>
+    <a class="btn" href="#premium-rank">
+      ⭐ Premium Rank
+    </a>
+    <a class="btn" href="#gallery">
+      📸 Gallery
+    </a>
+    <a class="btn" href="#mode-server">
+      🌐 Mode Server
+    </a>
+    <a class="btn" href="https://minecraftpocket-servers.com/server/131008/vote/">
+      Vote
+    </a>
+  </div>
+</section>
+
+<!-- ======= ABOUT US ======= -->
+<section class="about-us">
+  <h2>Tentang Kami</h2>
+  <p>Arsya Network adalah server Minecraft Bedrock yang telah berdiri sejak tahun 2023. Kami adalah komunitas yang terus berkembang, menawarkan berbagai mode permainan seru seperti Survival Mix dan Survival Vanilla. Bergabunglah dengan kami dan nikmati pengalaman bermain yang tak terlupakan bersama pemain lainnya</p>
+</section>
+
+<!-- ======= MODE SERVER & PREMIUM RANK ======= -->
+<section class="mode-section" id="mode-server">
+  <h2>Pilih Mode Server</h2>
+  
+  <div class="mode-grid">
+    <div class="mode-card mix">
+      <h3>🔀 Survival Mix</h3>
+      <p>Server dengan fitur custom, plugin tambahan, dan mekanik unik. Cocok untuk pemain yang ingin pengalaman berbeda!</p>
+    </div>
+    
+    <div class="mode-card vanilla">
+      <h3>🌲 Survival Vanilla</h3>
+      <p>Server murni vanilla tanpa plugin game-breaking. Untuk pemain yang suka tantangan vanilla asli!</p>
+    </div>
+  </div>
+  
+  <h1 class="premium-title" id="premium-rank">PREMIUM RANK</h1>
+</section>
+
+<!-- ======= CARDS ======= -->
+<div class="container">
+  <!-- STONE -->
+  <div class="card">
+    <div class="shine"></div>
+    <img src="https://minecraft.wiki/images/Stone_JE8.png?b5028" alt="Rank Stone">
+    <h2>STONE</h2>
+    <div class="price">10K</div>
+    <ul class="buffs">
+      <li>+heal</li><li>+feed</li><li>+clear</li>
+    </ul>
+    <a class="order-btn" href="https://wa.me/6281263130957?text=Halo%20saya%20mau%20pesan%20Rank%20STONE">Order via WA</a>
+  </div>
+
+  <!-- IRON -->
+  <div class="card">
+    <div class="shine"></div>
+    <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7e/Block_of_Iron_JE4_BE3.png/revision/latest?cb=20200226013546" alt="Rank Iron">
+    <h2>IRON</h2>
+    <div class="price">20K</div>
+    <ul class="buffs">
+      <li>+heal</li><li>+feed</li><li>+clear</li><li>+fly</li>
+    </ul>
+    <a class="order-btn" href="https://wa.me/6281263130957?text=Halo%20saya%20mau%20pesan%20Rank%20IRON">Order via WA</a>
+  </div>
+
+  <!-- GOLD -->
+  <div class="card">
+    <div class="shine"></div>
+    <img src="https://minecraft.wiki/images/Block_of_Gold_JE6_BE3.png?09478" alt="Rank Gold">
+    <h2>GOLD</h2>
+    <div class="price">30K</div>
+    <ul class="buffs">
+      <li>+heal</li><li>+feed</li><li>+fly</li><li>+fly&nbsp;off</li><li>+clear</li><li>+nightvision</li>
+    </ul>
+    <a class="order-btn" href="https://wa.me/6281263130957?text=Halo%20saya%20mau%20pesan%20Rank%20GOLD">Order via WA</a>
+  </div>
+
+  <!-- DIAMOND -->
+  <div class="card">
+    <div class="shine"></div>
+    <img src="https://minecraft.wiki/images/Block_of_Diamond_JE5_BE3.png?542ee" alt="Rank Diamond">
+    <h2>DIAMOND</h2>
+    <div class="price">40K</div>
+    <ul class="buffs">
+      <li>+heal</li><li>+feed</li><li>+fly</li><li>+fly&nbsp;off</li><li>+clear</li><li>+nightvision</li><li>+night</li><li>+haste</li>
+    </ul>
+    <a class="order-btn" href="https://wa.me/6281263130957?text=Halo%20saya%20mau%20pesan%20Rank%20DIAMOND">Order via WA</a>
+  </div>
+
+  <!-- VIP -->
+  <div class="card">
+    <div class="shine"></div>
+    <img src="https://i.ibb.co.com/9HC3Snhc/Whats-App-Image-2025-08-10-at-15-333-21.png" alt="Rank VIP">
+    <h2>VIP</h2>
+    <div class="price">70K</div>
+    <ul class="buffs">
+      <li>+heal</li><li>+feed</li><li>+fly</li><li>+clear</li><li>+nightvision</li><li>+fireresis</li><li>+waterbreat</li><li>+regen</li><li>+night</li><li>+day</li><li>+haste</li><li>+vanish</li>
+    </ul>
+    <a class="order-btn" href="https://wa.me/6281263130957?text=Halo%20saya%20mau%20pesan%20Rank%20VIP">Order via WA</a>
+  </div>
+</div>
+
+<!-- ======= GALLERY ======= -->
+<section class="gallery" id="gallery">
+  <h2>Gallery Server</h2>
+  <div class="gallery-grid">
+    <img src="https://i.ibb.co.com/tynHBDg/Screenshot-2025-08-10-14-20-54-807-com-mojang-minecraftpx.jpg" alt="Server Image 1">
+    <img src="https://i.ibb.co.com/1f3f6TVT/Screenshot-2025-08-10-00-14-59-736-com-whatsapp-w4b.jpg" alt="Server Image 2">
+    <img src="https://i.ibb.co.com/Xf5Fsz3m/Screenshot-2025-07-17-08-11-11-580-com-mojang-minecraftpe.jpg" alt="Server Image 3">
+    <img src="https://i.ibb.co.com/gLsYXYRj/Screenshot-2025-07-16-13-49-59-358-com-mojang-minecraftpe.jpg" alt="Server Image 4">
+  </div>
+</section>
+
+<!-- ======= SOCIAL MEDIA ======= -->
+<footer class="social-media">
+  <a href="https://www.instagram.com/arsya12321?igsh=ZzhuMW5ybjkzbmpv" target="_blank">
+    <img src="https://images.icon-icons.com/836/PNG/512/Instagram_icon-icons.com_66804.png" alt="Instagram">
+  </a>
+  <a href="https://www.tiktok.com/@arsya_funsurvive?_t=ZS-8ylB6sQhkWI&_r=1" target="_blank">
+    <img src="https://img.icons8.com/color/48/000/tiktok.png" alt="TikTok">
+  </a>
+  <a href="https://youtube.com/@arsya12321?si=OxgRRgDg1zWwSabh" target="_blank">
+    <img src="https://static.vecteezy.com/system/resources/thumbnails/016/716/452/small/youtube-icon-free-png.png" alt="YouTube">
+  </a>
+  <a href="https://chat.whatsapp.com/EepeBF4Xh8LHFKT4eH5mPM?mode=ac_t" target="_blank">
+    <img src="https://img.icons8.com/color/48/000/whatsapp.png" alt="WhatsApp">
+  </a>
+  <a href="https://discord.gg/Jvwhpz7p" target="_blank">
+    <img src="https://img.icons8.com/color/48/000/discord.png" alt="Discord">
+  </a>
+  <a href="https://saweria.co/Arsyarequest" target="_blank">
+    <img src="https://miro.medium.com/v2/resize:fit:340/1*Zv6P9O6aFyxKolLPwD2ghQ.png" alt="Saweria">
+  </a>
+</footer>
+
+<!-- ======= FOOTER ======= -->
+<div class="footer">
+  <p>© 2025 Arsya Network. Since 2023.</p>
+</div>
+
+</body>
+</html>

@@ -114,12 +114,56 @@
     line-height:1.5;
     font-family:'Poppins',sans-serif;
   }
-  .premium-title{
-    font-family:'Poppins',sans-serif;
-    font-size:2.5rem;
+  .mode-card .btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    border:2px solid var(--clr-neon);
+    background:transparent;
+    color:var(--clr-neon);
+    border-radius:30px;
+    text-decoration:none;
     font-weight:bold;
-    margin:30px 0 20px;
-    color:#fff;
+    transition:.3s;
+  }
+  .mode-card .btn:hover{
+    background:var(--clr-neon);
+    color:#000;
+    box-shadow:0 0 15px var(--clr-neon);
+  }
+  .mode-card .copy-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    border:2px solid #ff6b35;
+    background:transparent;
+    color:#ff6b35;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+  }
+  .mode-card .copy-btn:hover{
+    background:#ff6b35;
+    color:#000;
+    box-shadow:0 0 15px #ff6b35;
+  }
+  .mode-card .coming-soon{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    border:2px solid #ccc;
+    background:transparent;
+    color:#ccc;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+  }
+  .mode-card .coming-soon:hover{
+    background:#ccc;
+    color:#000;
+    box-shadow:0 0 15px #ccc;
   }
 
   /* ======= CARD GRID ======= */
@@ -278,9 +322,6 @@
     <div>Pemain Aktif <span>9+</span></div>
   </div>
   <div class="cta">
-    <a class="btn" href="minecraft://addExternalServer?serverName=ArsyaNetwork&serverAddress=mc.arsyanetwork.my.id&serverPort=19132">
-      🎮 Main Sekarang
-    </a>
     <a class="btn" href="https://discord.gg/Jvwhpz7p">
       💬 Gabung Discord
     </a>
@@ -299,12 +340,6 @@
   </div>
 </section>
 
-<!-- ======= ABOUT US ======= -->
-<section class="about-us">
-  <h2>Tentang Kami</h2>
-  <p>Arsya Network adalah server Minecraft Bedrock yang telah berdiri sejak tahun 2023. Kami adalah komunitas yang terus berkembang, menawarkan berbagai mode permainan seru seperti Survival Mix dan Survival Vanilla. Bergabunglah dengan kami dan nikmati pengalaman bermain yang tak terlupakan bersama pemain lainnya</p>
-</section>
-
 <!-- ======= MODE SERVER & PREMIUM RANK ======= -->
 <section class="mode-section" id="mode-server">
   <h2>Pilih Mode Server</h2>
@@ -313,11 +348,21 @@
     <div class="mode-card mix">
       <h3>🔀 Survival Mix</h3>
       <p>Server dengan fitur custom, plugin tambahan, dan mekanik unik. Cocok untuk pemain yang ingin pengalaman berbeda!</p>
+      <div class="player-count">Pemain Aktif: <span id="mix-player-count">0</span></div>
+      <a class="btn" href="minecraft-pe://addExternalServer?serverName=ArsyaNetwork&serverAddress=mc.arsyanetwork.my.id&serverPort=19132">
+        🎮 Main Sekarang
+      </a>
+      <button class="copy-btn" onclick="copyText('mc.arsyanetwork.my.id:19132')">Copy IP & Port</button>
     </div>
     
     <div class="mode-card vanilla">
       <h3>🌲 Survival Vanilla</h3>
       <p>Server murni vanilla tanpa plugin game-breaking. Untuk pemain yang suka tantangan vanilla asli!</p>
+      <div class="player-count">Pemain Aktif: <span id="vanilla-player-count">0</span></div>
+      <a class="btn" href="minecraft-pe://addExternalServer?serverName=ArsyaNetwork&serverAddress=mc.arsyanetwork.my.id&serverPort=19132">
+        🎮 Main Sekarang
+      </a>
+      <button class="coming-soon">IP Coming Soon</button>
     </div>
   </div>
   
@@ -341,7 +386,7 @@
   <!-- IRON -->
   <div class="card">
     <div class="shine"></div>
-    <img src="https://minecraft.wiki/images/Block_of_Iron_JE4_BE3.png?18948"/revision/latest?cb=20200226013546" alt="Rank Iron">
+    <img src="https://minecraft.wiki/images/Block_of_Iron_JE4_BE3.png?18948" alt="Rank Iron">
     <h2>IRON</h2>
     <div class="price">20K</div>
     <ul class="buffs">
@@ -425,8 +470,48 @@
   <p>© 2025 Arsya Network. Since 2023.</p>
 </div>
 
+<script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('IP & Port copied to clipboard: ' + text);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  }
+
+  // Fungsi untuk mengambil jumlah pemain online dari API
+  async function fetchPlayerCount(serverAddress, serverPort) {
+    try {
+      const response = await fetch(`https://api.mcsrvstat.us/2/${serverAddress}`);
+      const data = await response.json();
+      if (data.players.online !== undefined) {
+        return data.players.online;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      console.error('Error fetching player count:', error);
+      return 0;
+    }
+  }
+
+  // Fungsi untuk mengupdate jumlah pemain aktif
+  function updatePlayerCount(mode, count) {
+    if (mode === 'mix') {
+      document.getElementById('mix-player-count').innerText = count;
+    } else if (mode === 'vanilla') {
+      document.getElementById('vanilla-player-count').innerText = count;
+    }
+  }
+
+  // Mengambil jumlah pemain online dari server secara berkala
+  setInterval(async () => {
+    const mixPlayerCount = await fetchPlayerCount('mc.arsyanetwork.my.id', 19132);
+    const vanillaPlayerCount = await fetchPlayerCount('mc.arsyanetwork.my.id', 19132);
+    updatePlayerCount('mix', mixPlayerCount);
+    updatePlayerCount('vanilla', vanillaPlayerCount);
+  }, 30000); // Perbarui setiap 30 detik
+</script>
+
 </body>
-
 </html>
-
-
